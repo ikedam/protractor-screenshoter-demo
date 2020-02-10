@@ -1,0 +1,46 @@
+# docker-compose to run e2e tests
+version: '2'
+services:
+  angular:
+    image: node:12-alpine
+    ports:
+      - 4200
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      PROTRACTOR_SELENIUM_ADDRESS: http://chrome:4444/
+    # docker-compose (docker) uses the container id (a random hexadecimal string)
+    # as the host name of containers by default. To specify the hostname in
+    # the `--host` parameter, specify the static hostname here.
+    hostname: angular
+    command:
+      - /bin/sh
+      - -x
+      - -c
+      - |
+        # protractor-docker.conf.js is to use headless chrome in docker
+        ( [ -d node_modules ] || npm install ) \
+        && npm run e2e -- \
+          --host=angular \
+          --port=4200 \
+          --protractor-config=e2e/protractor-docker.conf.js
+    depends_on:
+      - chrome
+    networks:
+      - default
+  chrome:
+    build:
+      context: .
+      dockerfile: Dockerfile.chrome
+    ports:
+      - 4444
+    networks:
+      - default
+    command:
+      - chromedriver
+      - --port=4444
+      - --url-base=/
+      # this means to accept external connections
+      - --whitelisted-ips=
+      - --verbose

@@ -15,7 +15,8 @@ exports.config = {
   capabilities: {
     browserName: 'chrome'
   },
-  directConnect: true,
+  directConnect: !process.env.PROTRACTOR_SELENIUM_ADDRESS,
+  seleniumAddress: process.env.PROTRACTOR_SELENIUM_ADDRESS,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {

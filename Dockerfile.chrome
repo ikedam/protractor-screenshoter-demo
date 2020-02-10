@@ -1,0 +1,7 @@
+FROM alpine:3.10
+
+RUN apk add --no-cache chromium chromium-chromedriver
+EXPOSE 4444
+
+# "--whitelisted-ips=" means "allow access from anywhere"
+CMD ["chromedriver", "--port=4444", "--whitelisted-ips=", "--url-base=/"]
