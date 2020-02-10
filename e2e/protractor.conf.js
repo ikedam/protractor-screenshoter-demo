@@ -29,5 +29,17 @@ exports.config = {
       project: require('path').join(__dirname, './tsconfig.json')
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+  },
+  plugins: [
+    {
+      package: 'protractor-screenshoter-plugin',
+      screenshotPath: './screenshoter',
+      screenshotOnExpect: 'failure+success',
+      screenshotOnSpec: 'none',
+      withLogs: true,
+      writeReportFreq: 'asap',
+      imageToAscii: 'none',
+      clearFoldersBeforeTest: true
+    }
+  ]
 };
