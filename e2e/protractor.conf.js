@@ -32,14 +32,15 @@ exports.config = {
   },
   plugins: [
     {
-      package: 'protractor-screenshoter-plugin',
+      path: './src/protractor-screenshoter-wrapper.js',
       screenshotPath: './screenshoter',
       screenshotOnExpect: 'failure+success',
       screenshotOnSpec: 'none',
       withLogs: true,
       writeReportFreq: 'asap',
       imageToAscii: 'none',
-      clearFoldersBeforeTest: true
+      clearFoldersBeforeTest: true,
+      injectToHtml: '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'
     }
   ]
 };
